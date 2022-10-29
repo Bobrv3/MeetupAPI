@@ -20,20 +20,20 @@ public class ExceptionHandlerController {
     @ExceptionHandler(NoSuchMeetupException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionResponse handleException(NoSuchMeetupException exception) {
-        log.error(exception.getMessage());
+        log.error(exception.getMessage(), exception);
 
         return ExceptionResponse.builder()
                 .message(exception.getMessage())
                 .type(exception.getClass().getSimpleName())
                 .createdAt(LocalDateTime.now())
-                .status(HttpStatus.NOT_FOUND.value())
+                .statusCode(HttpStatus.NOT_FOUND.value())
                 .build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ExceptionResponse handleException(MethodArgumentNotValidException exception) {
-        log.error(exception.getMessage());
+        log.error(exception.getMessage(), exception);
 
         Matcher matcher = Pattern.compile("(?<=default message \\[)[\\w\\s\\W]*?(?=\\])")
                 .matcher(exception.getMessage());
@@ -48,20 +48,20 @@ public class ExceptionHandlerController {
                 .message(message.substring(0, message.lastIndexOf(":")))
                 .type(exception.getClass().getSimpleName())
                 .createdAt(LocalDateTime.now())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .statusCode(HttpStatus.BAD_REQUEST.value())
                 .build();
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponse handleException(Exception exception) {
-        log.error(exception.getMessage());
+        log.error(exception.getMessage(), exception);
 
         return ExceptionResponse.builder()
                 .message("bad request")
                 .type(exception.getClass().getSimpleName())
                 .createdAt(LocalDateTime.now())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .statusCode(HttpStatus.BAD_REQUEST.value())
                 .build();
     }
 }

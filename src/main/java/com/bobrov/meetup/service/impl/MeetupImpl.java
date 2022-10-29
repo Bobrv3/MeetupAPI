@@ -15,23 +15,23 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MeetupImpl implements MeetupService {
-    private final MeetupRepository meetupDAO;
+    private final MeetupRepository meetupRepository;
 
     @Override
     public Meetup findById(Long id) {
-        return meetupDAO.findById(id)
+        return meetupRepository.findById(id)
                 .orElseThrow(() -> new NoSuchMeetupException(id));
     }
 
     @Override
     public List<Meetup> findAll() {
-        return meetupDAO.findAll();
+        return meetupRepository.findAll();
     }
 
     @Override
     @Transactional
     public Meetup save(Meetup meetup) {
-        return meetupDAO.save(meetup);
+        return meetupRepository.save(meetup);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MeetupImpl implements MeetupService {
         Meetup meetup = findById(id);
         MeetupMapper.INSTANCE.updateModel(meetupDto, meetup);
 
-        return meetupDAO.update(meetup);
+        return meetupRepository.update(meetup);
     }
 
     @Override
@@ -48,6 +48,6 @@ public class MeetupImpl implements MeetupService {
     public void deleteById(Long id) {
         Meetup meetup = findById(id);
 
-        meetupDAO.delete(meetup);
+        meetupRepository.delete(meetup);
     }
 }

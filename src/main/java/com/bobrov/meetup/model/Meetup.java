@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +40,6 @@ public class Meetup {
     @Column(name = "organizer", nullable = false)
     private String organizer;
 
-    @CreationTimestamp
     @Column(name = "event_date", nullable = false)
     private LocalDateTime eventDate;
 

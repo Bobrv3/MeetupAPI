@@ -10,6 +10,6 @@ import java.time.LocalDateTime;
 public class ExceptionResponse {
     private String message;
     private String type;
-    private int status;
+    private int statusCode;
     private LocalDateTime createdAt;
 }
