@@ -1,7 +1,6 @@
 package com.bobrov.meetup.dao.impl;
 
-import com.bobrov.meetup.dao.MeetupDAO;
-import com.bobrov.meetup.exception.NoSuchMeetingException;
+import com.bobrov.meetup.dao.MeetupRepository;
 import com.bobrov.meetup.model.Meetup;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -13,13 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class MeetupDaoImpl implements MeetupDAO {
+public class MeetupRepositoryImpl implements MeetupRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public Optional<Meetup> findById(Long id) {
-        return Optional.of(
+        final Meetup meetup = entityManager.find(Meetup.class, id);
+
+        return Optional.ofNullable(
                 entityManager.find(Meetup.class, id)
         );
     }
@@ -44,11 +45,7 @@ public class MeetupDaoImpl implements MeetupDAO {
     }
 
     @Override
-    public void deleteById(Long id) {
-        Optional<Meetup> meetup = findById(id);
-
-        entityManager.remove(meetup
-                .orElseThrow(NoSuchMeetingException::new)
-        );
+    public void delete(Meetup meetup) {
+        entityManager.remove(meetup);
     }
 }
