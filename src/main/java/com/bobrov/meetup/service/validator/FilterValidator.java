@@ -27,7 +27,6 @@ public final class FilterValidator {
         }
 
         validateParams(paramsForFilter, validatedClass);
-
         validateOperations(paramsForFilter);
     }
 
@@ -49,7 +48,7 @@ public final class FilterValidator {
         paramsForFilter.keySet().stream()
                 .forEach(paramName -> {
                     if (!fieldsName.contains(paramName)) {
-                        throw new FilterValidationException(String.format("Unknown field %s", paramName));
+                        throw new FilterValidationException(String.format("Unknown field '%s'", paramName));
                     }
                 });
     }

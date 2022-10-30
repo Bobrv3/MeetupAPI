@@ -7,6 +7,7 @@ import com.bobrov.meetup.mapper.MeetupMapper;
 import com.bobrov.meetup.model.Meetup;
 import com.bobrov.meetup.service.MeetupService;
 import com.bobrov.meetup.service.validator.FilterValidator;
+import com.bobrov.meetup.service.validator.SortValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class MeetupImpl implements MeetupService {
     @Override
     public List<Meetup> findAll(Map<String, String> paramsForFilter, List<String> paramsForSort, String sortOrder) {
         FilterValidator.validate(paramsForFilter, Meetup.class);
+        SortValidator.validate(paramsForSort, sortOrder, Meetup.class);
 
         return meetupRepository.findAll(paramsForFilter, paramsForSort, sortOrder);
     }
