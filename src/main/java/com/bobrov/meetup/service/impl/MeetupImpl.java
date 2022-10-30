@@ -6,11 +6,13 @@ import com.bobrov.meetup.exception.NoSuchMeetupException;
 import com.bobrov.meetup.mapper.MeetupMapper;
 import com.bobrov.meetup.model.Meetup;
 import com.bobrov.meetup.service.MeetupService;
+import com.bobrov.meetup.service.validator.FilterValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +26,10 @@ public class MeetupImpl implements MeetupService {
     }
 
     @Override
-    public List<Meetup> findAll() {
-        return meetupRepository.findAll();
+    public List<Meetup> findAll(Map<String, String> paramsForFilter, List<String> paramsForSort, String sortOrder) {
+        FilterValidator.validate(paramsForFilter, Meetup.class);
+
+        return meetupRepository.findAll(paramsForFilter, paramsForSort, sortOrder);
     }
 
     @Override

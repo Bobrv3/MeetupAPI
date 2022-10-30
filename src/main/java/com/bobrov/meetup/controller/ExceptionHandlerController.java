@@ -30,6 +30,7 @@ public class ExceptionHandlerController {
                 .build();
     }
 
+    // TODO comment
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ExceptionResponse handleException(MethodArgumentNotValidException exception) {
@@ -58,7 +59,7 @@ public class ExceptionHandlerController {
         log.error(exception.getMessage(), exception);
 
         return ExceptionResponse.builder()
-                .message("bad request")
+                .message(exception.getMessage())
                 .type(exception.getClass().getSimpleName())
                 .createdAt(LocalDateTime.now())
                 .statusCode(HttpStatus.BAD_REQUEST.value())

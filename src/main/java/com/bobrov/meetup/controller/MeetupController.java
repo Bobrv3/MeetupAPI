@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,11 +22,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/meetups")
 @RequiredArgsConstructor
 public class MeetupController {
+
+    private static final String ASC_ORDER = "asc";
+    private static final String FILTER_BY_ID = "id";
     private final MeetupService meetupService;
 
     @GetMapping("/{id:\\d+}")
@@ -36,18 +41,22 @@ public class MeetupController {
     }
 
     @GetMapping
-    public List<MeetupDto> getAll() {
+    public List<MeetupDto> getAll(
+            @RequestParam(required = false, name = "sort_order", defaultValue = ASC_ORDER) String sortOrder,
+            @RequestParam(required = false, name = "sort_by",defaultValue = FILTER_BY_ID) List<String> paramsForSort,
+            @RequestParam(required = false) Map<String, String> paramsForFilter
+    ) {
         return MeetupMapper.INSTANCE.toListDto(
-                meetupService.findAll()
+                meetupService.findAll(paramsForFilter, paramsForSort, sortOrder)
         );
     }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createMeetup(@Valid @RequestBody MeetupDto meetupDto) {
         Meetup meetup = meetupService.save(MeetupMapper.INSTANCE.toModel(meetupDto));
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(meetup.getId())
                 .toUri();
