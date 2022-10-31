@@ -1,15 +1,14 @@
 package com.bobrov.meetup.service.validator;
 
-import com.bobrov.meetup.exception.SortValidationException;
+import com.bobrov.meetup.service.exception.SortValidationException;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public final class SortValidator {
-    public enum Order {
-        ASC, DESC
-    }
+    private static final String ASC_ORDER = "asc";
+    private static final String DESC_ORDER = "asc";
 
     public static void validate(List<String> paramsForSort, String sortOrder, Class<?> validatedClass) {
         validateOrder(sortOrder);
@@ -30,8 +29,8 @@ public final class SortValidator {
     }
 
     private static void validateOrder(String sortOrder) {
-        if (!sortOrder.equalsIgnoreCase(Order.ASC.name())
-                && !sortOrder.equalsIgnoreCase(Order.DESC.name())
+        if (!sortOrder.equalsIgnoreCase(ASC_ORDER)
+                && !sortOrder.equalsIgnoreCase(DESC_ORDER)
         ) {
           throw new SortValidationException(
                   String.format("Unknown order direction '%s'", sortOrder));

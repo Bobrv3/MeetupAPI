@@ -1,8 +1,8 @@
 package com.bobrov.meetup.dao.impl;
 
 import com.bobrov.meetup.dao.MeetupRepository;
+import com.bobrov.meetup.dao.util.FilterProvider;
 import com.bobrov.meetup.model.Meetup;
-import com.bobrov.meetup.util.filter.FilterProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -74,13 +74,7 @@ public class MeetupRepositoryImpl implements MeetupRepository {
     }
 
     @Override
-    public Meetup save(Meetup meetup) {
-        entityManager.persist(meetup);
-        return meetup;
-    }
-
-    @Override
-    public Meetup update(Meetup meetup) {
+    public Meetup saveOrUpdate(Meetup meetup) {
         return entityManager.merge(meetup);
     }
 

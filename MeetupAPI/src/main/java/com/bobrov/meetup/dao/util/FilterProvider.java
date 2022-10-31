@@ -1,8 +1,8 @@
-package com.bobrov.meetup.util.filter;
+package com.bobrov.meetup.dao.util;
 
+import com.bobrov.meetup.dao.util.impl.LDTimeFilter;
+import com.bobrov.meetup.dao.util.impl.StringFilter;
 import com.bobrov.meetup.model.Meetup;
-import com.bobrov.meetup.util.filter.impl.LDTimeFilter;
-import com.bobrov.meetup.util.filter.impl.StringFilter;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +12,7 @@ import java.util.Map;
 
 @Component
 public final class FilterProvider {
+    private static final FilterProvider INSTANCE = new FilterProvider();
     private final Map<FilterType, Filter> repository = new EnumMap<>(FilterType.class);
 
     private FilterProvider() {
@@ -30,5 +31,9 @@ public final class FilterProvider {
         } else {
             throw new RuntimeException(String.format("No suitable filter with type %s", type));
         }
+    }
+
+    public static FilterProvider getInstance() {
+        return INSTANCE;
     }
 }

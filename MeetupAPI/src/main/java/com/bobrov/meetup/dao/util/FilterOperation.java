@@ -1,4 +1,4 @@
-package com.bobrov.meetup.util.filter;
+package com.bobrov.meetup.dao.util;
 
 public enum FilterOperation {
     EQ,  // EQUALS

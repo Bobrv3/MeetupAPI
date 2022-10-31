@@ -1,5 +1,7 @@
 package com.bobrov.meetup.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Future;
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
  * A DTO for the {@link com.bobrov.meetup.model.Meetup} entity
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class MeetupDto implements Serializable {
     @Min(value = 0)
     private final Long id;

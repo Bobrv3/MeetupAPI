@@ -1,17 +1,15 @@
 package com.bobrov.meetup.controller;
 
-import com.bobrov.meetup.exception.ExceptionResponse;
-import com.bobrov.meetup.exception.NoSuchMeetupException;
+import com.bobrov.meetup.dto.ExceptionResponse;
+import com.bobrov.meetup.service.exception.NoSuchMeetupException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RestControllerAdvice
 @Slf4j
@@ -30,23 +28,13 @@ public class ExceptionHandlerController {
                 .build();
     }
 
-    // TODO comment
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ExceptionResponse handleException(MethodArgumentNotValidException exception) {
+    public ExceptionResponse handleException(ConstraintViolationException exception) {
         log.error(exception.getMessage(), exception);
 
-        Matcher matcher = Pattern.compile("(?<=default message \\[)[\\w\\s\\W]*?(?=\\])")
-                .matcher(exception.getMessage());
-
-        StringBuilder message = new StringBuilder("");
-        while (matcher.find()) {
-            message.append(matcher.group())
-                    .append(":");
-        }
-
         return ExceptionResponse.builder()
-                .message(message.substring(0, message.lastIndexOf(":")))
+                .message(exception.getMessage())
                 .type(exception.getClass().getSimpleName())
                 .createdAt(LocalDateTime.now())
                 .statusCode(HttpStatus.BAD_REQUEST.value())
@@ -54,7 +42,7 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ExceptionResponse handleException(Exception exception) {
         log.error(exception.getMessage(), exception);
 

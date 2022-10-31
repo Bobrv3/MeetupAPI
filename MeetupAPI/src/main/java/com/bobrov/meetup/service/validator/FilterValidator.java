@@ -1,7 +1,8 @@
 package com.bobrov.meetup.service.validator;
 
-import com.bobrov.meetup.exception.FilterValidationException;
-import com.bobrov.meetup.util.filter.FilterOperation;
+import com.bobrov.meetup.controller.MeetupController;
+import com.bobrov.meetup.dao.util.FilterOperation;
+import com.bobrov.meetup.service.exception.FilterValidationException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,8 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class FilterValidator {
-    private static final String SORT_ORDER = "sort_order";
-    private static final String SORT_BY = "sort_by";
+    private static final String OPERATION_VALUE_SEPARATOR = ";";
     private static final List<String> filterOperations
             = Collections.unmodifiableList(Arrays.stream(FilterOperation.values())
             .map(filterCondition -> filterCondition.name())
@@ -19,11 +19,11 @@ public final class FilterValidator {
 
 
     public static void validate(Map<String, String> paramsForFilter, Class<?> validatedClass) {
-        if (paramsForFilter.containsKey(SORT_ORDER)) {
-            paramsForFilter.remove(SORT_ORDER);
+        if (paramsForFilter.containsKey(MeetupController.SORT_ORDER)) {
+            paramsForFilter.remove(MeetupController.SORT_ORDER);
         }
-        if (paramsForFilter.containsKey(SORT_BY)) {
-            paramsForFilter.remove(SORT_BY);
+        if (paramsForFilter.containsKey(MeetupController.SORT_BY)) {
+            paramsForFilter.remove(MeetupController.SORT_BY);
         }
 
         validateParams(paramsForFilter, validatedClass);
@@ -32,7 +32,7 @@ public final class FilterValidator {
 
     private static void validateOperations(Map<String, String> paramsForFilter) {
         for (Map.Entry<String, String> entry : paramsForFilter.entrySet()) {
-            String operation = entry.getValue().split(";")[0].toUpperCase();
+            String operation = entry.getValue().split(OPERATION_VALUE_SEPARATOR)[0].toUpperCase();
             if (!filterOperations.contains(operation)) {
                 throw new FilterValidationException(
                         String.format(String.format("Unknown operation '%s' for filtering", operation)));

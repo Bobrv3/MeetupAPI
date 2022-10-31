@@ -1,4 +1,4 @@
-package com.bobrov.meetup.exception;
+package com.bobrov.meetup.service.exception;
 
 public class FilterValidationException extends RuntimeException{
     public FilterValidationException() {

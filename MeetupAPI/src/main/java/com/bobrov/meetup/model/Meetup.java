@@ -32,19 +32,19 @@ public class Meetup {
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    @Column(name = "topic", nullable = false)
+    @Column(nullable = false)
     private String topic;
 
-    @Column(name = "description", nullable = false)
+    @Column(nullable = false)
     private String description;
 
-    @Column(name = "organizer", nullable = false)
+    @Column(nullable = false)
     private String organizer;
 
     @Column(name = "event_date", nullable = false)
     private LocalDateTime eventDate;
 
-    @Column(name = "place", nullable = false)
+    @Column(nullable = false)
     private String place;
 
     @Override

@@ -1,4 +1,4 @@
-package com.bobrov.meetup.exception;
+package com.bobrov.meetup.dto;
 
 import lombok.Builder;
 import lombok.Getter;

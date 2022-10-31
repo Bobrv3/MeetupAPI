@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface MeetupRepository {
     Optional<Meetup> findById(Long id);
     List<Meetup> findAll(Map<String, String> paramsForFilter, List<String> params, String sortOrder);
-    Meetup save(Meetup meetup);
-    Meetup update(Meetup meetup);
+    Meetup saveOrUpdate(Meetup meetup);
     void delete(Meetup meetup);
 }

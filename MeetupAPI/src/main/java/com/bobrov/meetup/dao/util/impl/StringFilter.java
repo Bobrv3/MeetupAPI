@@ -1,8 +1,8 @@
-package com.bobrov.meetup.util.filter.impl;
+package com.bobrov.meetup.dao.util.impl;
 
+import com.bobrov.meetup.dao.util.Filter;
+import com.bobrov.meetup.dao.util.FilterOperation;
 import com.bobrov.meetup.model.Meetup;
-import com.bobrov.meetup.util.filter.Filter;
-import com.bobrov.meetup.util.filter.FilterOperation;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;

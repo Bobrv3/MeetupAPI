@@ -1,7 +1,7 @@
 package com.bobrov.meetup.controller;
 
 import com.bobrov.meetup.dto.MeetupDto;
-import com.bobrov.meetup.mapper.MeetupMapper;
+import com.bobrov.meetup.dto.mapper.MeetupMapper;
 import com.bobrov.meetup.model.Meetup;
 import com.bobrov.meetup.service.MeetupService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +27,10 @@ import java.util.Map;
 @RequestMapping("/api/meetups")
 @RequiredArgsConstructor
 public class MeetupController {
-
-    private static final String ASC_ORDER = "asc";
-    private static final String SORT_BY_ID = "id";
+    public static final String SORT_ORDER = "sort_order";
+    public static final String DEF_SORT_ORDER = "asc";
+    public static final String SORT_BY = "sort_by";
+    public static final String DEF_SORT_BY = "id";
     private final MeetupService meetupService;
 
     @GetMapping("/{id:\\d+}")
@@ -42,8 +42,8 @@ public class MeetupController {
 
     @GetMapping
     public List<MeetupDto> getAll(
-            @RequestParam(required = false, name = "sort_order", defaultValue = ASC_ORDER) String sortOrder,
-            @RequestParam(required = false, name = "sort_by",defaultValue = SORT_BY_ID) List<String> paramsForSort,
+            @RequestParam(required = false, name = SORT_ORDER, defaultValue = DEF_SORT_ORDER) String sortOrder,
+            @RequestParam(required = false, name = SORT_BY,defaultValue = DEF_SORT_BY) List<String> paramsForSort,
             @RequestParam(required = false) Map<String, String> paramsForFilter
     ) {
         return MeetupMapper.INSTANCE.toListDto(
@@ -54,8 +54,8 @@ public class MeetupController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> createMeetup(@Valid @RequestBody MeetupDto meetupDto) {
-        Meetup meetup = meetupService.save(MeetupMapper.INSTANCE.toModel(meetupDto));
+    public ResponseEntity<Object> createMeetup(@RequestBody MeetupDto meetupDto) {
+        Meetup meetup = meetupService.save(meetupDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(meetup.getId())
@@ -69,7 +69,7 @@ public class MeetupController {
     @PutMapping("/{id:\\d+}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateMeetup(
-            @Valid @RequestBody MeetupDto meetupDto,
+            @RequestBody MeetupDto meetupDto,
             @PathVariable Long id
     ) {
         meetupService.update(id, meetupDto);

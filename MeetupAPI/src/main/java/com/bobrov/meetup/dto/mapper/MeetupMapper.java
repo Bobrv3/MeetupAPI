@@ -1,4 +1,4 @@
-package com.bobrov.meetup.mapper;
+package com.bobrov.meetup.dto.mapper;
 
 import com.bobrov.meetup.dto.MeetupDto;
 import com.bobrov.meetup.model.Meetup;
