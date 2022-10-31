@@ -1,10 +1,11 @@
 package com.bobrov.meetup.model;
 
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
@@ -19,10 +20,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "meetups")
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Meetup {
     private static final String SEQ_NAME = "meetup_seq";
     @Id

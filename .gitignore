@@ -1,5 +1,7 @@
 HELP.md
 target/
+db/
+!MeetupAPI/src/main/resources/db
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

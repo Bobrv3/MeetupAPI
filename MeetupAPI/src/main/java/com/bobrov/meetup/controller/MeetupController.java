@@ -30,7 +30,7 @@ import java.util.Map;
 public class MeetupController {
 
     private static final String ASC_ORDER = "asc";
-    private static final String FILTER_BY_ID = "id";
+    private static final String SORT_BY_ID = "id";
     private final MeetupService meetupService;
 
     @GetMapping("/{id:\\d+}")
@@ -43,7 +43,7 @@ public class MeetupController {
     @GetMapping
     public List<MeetupDto> getAll(
             @RequestParam(required = false, name = "sort_order", defaultValue = ASC_ORDER) String sortOrder,
-            @RequestParam(required = false, name = "sort_by",defaultValue = FILTER_BY_ID) List<String> paramsForSort,
+            @RequestParam(required = false, name = "sort_by",defaultValue = SORT_BY_ID) List<String> paramsForSort,
             @RequestParam(required = false) Map<String, String> paramsForFilter
     ) {
         return MeetupMapper.INSTANCE.toListDto(

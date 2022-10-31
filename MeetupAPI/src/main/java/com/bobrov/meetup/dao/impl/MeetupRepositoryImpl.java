@@ -28,8 +28,6 @@ public class MeetupRepositoryImpl implements MeetupRepository {
 
     @Override
     public Optional<Meetup> findById(Long id) {
-        final Meetup meetup = entityManager.find(Meetup.class, id);
-
         return Optional.ofNullable(
                 entityManager.find(Meetup.class, id)
         );
