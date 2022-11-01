@@ -82,4 +82,8 @@ public class MeetupRepositoryImpl implements MeetupRepository {
     public void delete(Meetup meetup) {
         entityManager.remove(meetup);
     }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }

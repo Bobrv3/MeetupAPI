@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public final class SortValidator {
     private static final String ASC_ORDER = "asc";
-    private static final String DESC_ORDER = "asc";
+    private static final String DESC_ORDER = "desc";
 
     public static void validate(List<String> paramsForSort, String sortOrder, Class<?> validatedClass) {
         validateOrder(sortOrder);

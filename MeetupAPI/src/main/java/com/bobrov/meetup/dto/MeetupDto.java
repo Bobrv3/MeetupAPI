@@ -22,18 +22,18 @@ public class MeetupDto implements Serializable {
     private final Long id;
 
     @NotBlank
-    private final String topic;
+    private String topic;
 
     @NotBlank
-    private final String description;
+    private String description;
 
     @NotBlank
-    private final String organizer;
+    private String organizer;
 
     @Future
     @NotNull
-    private final LocalDateTime eventDate;
+    private LocalDateTime eventDate;
 
     @NotBlank
-    private final String place;
+    private String place;
 }

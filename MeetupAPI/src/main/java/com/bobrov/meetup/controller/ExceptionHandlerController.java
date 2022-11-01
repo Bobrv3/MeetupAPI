@@ -1,7 +1,9 @@
 package com.bobrov.meetup.controller;
 
 import com.bobrov.meetup.dto.ExceptionResponse;
+import com.bobrov.meetup.service.exception.FilterValidationException;
 import com.bobrov.meetup.service.exception.NoSuchMeetupException;
+import com.bobrov.meetup.service.exception.SortValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,6 +39,19 @@ public class ExceptionHandlerController {
                 .message(exception.getMessage())
                 .type(exception.getClass().getSimpleName())
                 .createdAt(LocalDateTime.now())
+                .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                .build();
+    }
+
+    @ExceptionHandler({FilterValidationException.class, SortValidationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleFilterException(RuntimeException exception) {
+        log.error(exception.getMessage(), exception);
+
+        return ExceptionResponse.builder()
+                .message(exception.getMessage())
+                .type(exception.getClass().getSimpleName())
+                .createdAt(LocalDateTime.now())
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .build();
     }
@@ -50,7 +65,7 @@ public class ExceptionHandlerController {
                 .message(exception.getMessage())
                 .type(exception.getClass().getSimpleName())
                 .createdAt(LocalDateTime.now())
-                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .build();
     }
 }

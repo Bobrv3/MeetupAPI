@@ -3,6 +3,7 @@ package com.bobrov.meetup.dao.util;
 import com.bobrov.meetup.dao.util.impl.LDTimeFilter;
 import com.bobrov.meetup.dao.util.impl.StringFilter;
 import com.bobrov.meetup.model.Meetup;
+import com.bobrov.meetup.service.exception.FilterValidationException;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ public final class FilterProvider {
         } else if (type == String.class) {
             return repository.get(FilterType.STRING);
         } else {
-            throw new RuntimeException(String.format("No suitable filter with type %s", type));
+            throw new FilterValidationException(String.format("No suitable filter with type %s", type));
         }
     }
 
