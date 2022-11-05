@@ -79,11 +79,12 @@ public class MeetupRepositoryImpl implements MeetupRepository {
     }
 
     @Override
-    public void delete(Meetup meetup) {
+    public boolean delete(Meetup meetup) {
         entityManager.remove(meetup);
+        return true;
     }
 
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public void flush() {
+        entityManager.flush();
     }
 }

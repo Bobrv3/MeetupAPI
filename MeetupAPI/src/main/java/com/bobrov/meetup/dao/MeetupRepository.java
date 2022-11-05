@@ -10,5 +10,5 @@ public interface MeetupRepository {
     Optional<Meetup> findById(Long id);
     List<Meetup> findAll(Map<String, String> paramsForFilter, List<String> params, String sortOrder);
     Meetup saveOrUpdate(Meetup meetup);
-    void delete(Meetup meetup);
+    boolean delete(Meetup meetup);
 }
