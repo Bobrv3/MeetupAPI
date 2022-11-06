@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MeetupDto implements Serializable {
     @Min(value = 0)
-    private final Long id;
+    private Long id;
 
     @NotBlank
     private String topic;
