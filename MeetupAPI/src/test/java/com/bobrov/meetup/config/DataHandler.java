@@ -12,9 +12,6 @@ import java.util.List;
 
 @TestConfiguration
 public class DataHandler {
-    public DataHandler() {
-        System.out.println("test call");
-    }
 
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
